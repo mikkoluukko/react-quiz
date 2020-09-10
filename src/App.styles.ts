@@ -22,12 +22,17 @@ export const GlobalStyle = createGlobalStyle`
   `;
 
 export const Wrapper = styled.div`
+ 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;  
 
   > p {
     color: #fff;
+  }
+
+  & select {
+    margin: 5px;
   }
 
   .score {
@@ -66,5 +71,6 @@ export const Wrapper = styled.div`
   .start, .stop {
     max-width: 200px;
   }
+
 
 `

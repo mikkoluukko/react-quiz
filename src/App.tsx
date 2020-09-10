@@ -3,7 +3,7 @@ import { fetchQuizQuestions } from './API';
 // Components
 import QuestionCard from './components/QuestionCard';
 // Types
-import { QuestionState, Difficulty } from './API';
+import { QuestionState } from './API';
 // Styles
 import { GlobalStyle, Wrapper } from './App.styles';
 
@@ -14,7 +14,7 @@ export type AnswerObject = {
   correctAnswer: string;
 }
 
-const TOTAL_QUESTIONS = 10;
+// const TOTAL_QUESTIONS = 10;
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -23,29 +23,39 @@ const App = () => {
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([]);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
+  const [amount, setAmount] = useState(5);
   const [category, setCategory] = useState("");
+  const [difficulty, setDifficulty] = useState("");
 
-  console.log(questions);
+  // console.log(questions);
 
   const startTrivia = async () => {
-    setLoading(true);
-    setGameOver(false);
-
     const newQuestions = await fetchQuizQuestions(
-      TOTAL_QUESTIONS,
+      amount,
       category,
-      Difficulty.MEDIUM
+      difficulty
     );
 
-    setQuestions(newQuestions);
-    setScore(0);
-    setUserAnswers([]);
-    setNumber(0);
-    setLoading(false);
+    if (newQuestions !== null) {
+      setLoading(true);
+      setGameOver(false);
+  
+      setQuestions(newQuestions);
+      setScore(0);
+      setUserAnswers([]);
+      setNumber(0);
+      setLoading(false);
+    } else {
+      alert("Not enough questions with these settings");
+    }
+
   };
   
   const stopTrivia = async () => {
     setGameOver(true);
+    setAmount(5);
+    setCategory("");
+    setDifficulty("");
   };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -71,15 +81,23 @@ const App = () => {
   const nextQuestion = () => {
     const nextQuestion = number + 1;
 
-    if (nextQuestion === TOTAL_QUESTIONS) {
+    if (nextQuestion === amount) {
       setGameOver(true);
     } else {
       setNumber(nextQuestion);
     }
   };
 
+  const handleAmountChange = (e: React.FormEvent<HTMLSelectElement>) => {
+    setAmount(parseInt(e.currentTarget.value))
+  };
+
   const handleCategoryChange = (e: React.FormEvent<HTMLSelectElement>) => {
     setCategory(e.currentTarget.value)
+  };
+
+  const handleDifficultyChange = (e: React.FormEvent<HTMLSelectElement>) => {
+    setDifficulty(e.currentTarget.value)
   };
 
   return (
@@ -87,36 +105,60 @@ const App = () => {
       <GlobalStyle />
       <Wrapper>
         <h1>REACT QUIZ</h1>
-        {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-          <select name="trivia_category" onChange={handleCategoryChange}>
-            <option value="">Any Category</option>
-            <option value="category=9">General Knowledge</option>
-            <option value="category=10">Entertainment: Books</option>
-            <option value="category=11">Entertainment: Film</option>
-            <option value="category=12">Entertainment: Music</option>
-            <option value="category=13">Entertainment: Musicals &amp; Theatres</option>
-            <option value="category=14">Entertainment: Television</option>
-            <option value="category=15">Entertainment: Video Games</option>
-            <option value="category=16">Entertainment: Board Games</option>
-            <option value="category=17">Science &amp; Nature</option>
-            <option value="category=18">Science: Computers</option>
-            <option value="category=19">Science: Mathematics</option>
-            <option value="category=20">Mythology</option>
-            <option value="category=21">Sports</option>
-            <option value="category=22">Geography</option>
-            <option value="category=23">History</option>
-            <option value="category=24">Politics</option>
-            <option value="category=25">Art</option>
-            <option value="category=26">Celebrities</option>
-            <option value="category=27">Animals</option>
-            <option value="category=28">Vehicles</option>
-            <option value="category=29">Entertainment: Comics</option>
-            <option value="category=30">Science: Gadgets</option>
-            <option value="category=31">Entertainment: Japanese Anime &amp; Manga</option>
-            <option value="category=32">Entertainment: Cartoon &amp; Animations</option>		
-          </select>
+        {gameOver || userAnswers.length === amount ? (
+          <div>
+            <div>
+              <select name="trivia_amount" onChange={handleAmountChange}>
+                <option value="5">5 Questions</option>
+                <option value="10">10 Questions</option>
+                <option value="20">20 Questions</option>
+              </select>
+            </div>
+            <div>
+              <select name="trivia_category" onChange={handleCategoryChange}>
+                <option value="">Any Category</option>
+                <option value="category=9">General Knowledge</option>
+                <option value="category=10">Entertainment: Books</option>
+                <option value="category=11">Entertainment: Film</option>
+                <option value="category=12">Entertainment: Music</option>
+                <option value="category=13">Entertainment: Musicals &amp; Theatres</option>
+                <option value="category=14">Entertainment: Television</option>
+                <option value="category=15">Entertainment: Video Games</option>
+                <option value="category=16">Entertainment: Board Games</option>
+                <option value="category=17">Science &amp; Nature</option>
+                <option value="category=18">Science: Computers</option>
+                <option value="category=19">Science: Mathematics</option>
+                <option value="category=20">Mythology</option>
+                <option value="category=21">Sports</option>
+                <option value="category=22">Geography</option>
+                <option value="category=23">History</option>
+                <option value="category=24">Politics</option>
+                <option value="category=25">Art</option>
+                <option value="category=26">Celebrities</option>
+                <option value="category=27">Animals</option>
+                <option value="category=28">Vehicles</option>
+                <option value="category=29">Entertainment: Comics</option>
+                <option value="category=30">Science: Gadgets</option>
+                <option value="category=31">Entertainment: Japanese Anime &amp; Manga</option>
+                <option value="category=32">Entertainment: Cartoon &amp; Animations</option>		
+              </select>
+            </div>
+            <div>
+              <select name="trivia_difficulty" onChange={handleDifficultyChange}>
+                <option value="">Any Difficulty</option>
+                <option value="difficulty=easy">Easy</option>
+                <option value="difficulty=medium">Medium</option>
+                <option value="difficulty=hard">Hard</option>
+              </select>
+            </div>            
+              {/* <div>
+                <button className="start" onClick={startTrivia}>
+                  Start
+                </button>
+            </div> */}
+          </div>
         ) : null}
-        {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
+        {gameOver || userAnswers.length === amount ? (
           <button className="start" onClick={startTrivia}>
             Start
           </button>
@@ -126,16 +168,18 @@ const App = () => {
         {!gameOver ? 
           <div>
             <span className="score">Score: {score}</span>
-            <button className="stop" onClick={stopTrivia}>
-              Stop
-            </button>
+            {userAnswers.length !== amount ?
+              <button className="stop" onClick={stopTrivia}>
+                Stop
+              </button>
+            : null}
           </div>
          : null}
         {loading && <p>Loading question...</p>}
         {!loading && !gameOver && (
           <QuestionCard 
             questionNr={number + 1}
-            totalQuestions={TOTAL_QUESTIONS}
+            totalQuestions={amount}
             question={questions[number].question}
             answers={questions[number].answers}
             userAnswer={userAnswers ? userAnswers[number] : undefined}
@@ -145,7 +189,7 @@ const App = () => {
         {!gameOver && 
         !loading && 
         userAnswers.length === number + 1 && 
-        number !== TOTAL_QUESTIONS - 1 ? (
+        number !== amount - 1 ? (
           <button className="next" onClick={nextQuestion}>
             Next Question
           </button>
