@@ -49,21 +49,21 @@ export const Wrapper = styled.div`
     font-size: 70px;
     font-weight: 400;
     text-align: center;
-    margin: 20px;
+    margin: 5px;
   }
 
-  .start, .next { 
+  .start, .next, .stop { 
     cursor: pointer;
     background: linear-gradient(180deg, #fff, #ffcc91);
     border: 2px solid #d38558;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     height: 40px;
-    margin: 20px 0;
+    margin: 10px 0;
     padding: 0 40px;
   }
 
-  .start {
+  .start, .stop {
     max-width: 200px;
   }
 
