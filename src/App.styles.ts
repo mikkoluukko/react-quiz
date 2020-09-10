@@ -36,17 +36,16 @@ export const Wrapper = styled.div`
   }
 
   .score {
+    font-family: Orbitron, sans-serif;
     color: #fff;
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin: 10px;
     padding: 5px;
-    background-color: #000;
-    border: 2px solid #fff;
   }
 
   h1 {
     font-family: Fascinate Inline, 'Arial Narrow Bold', sans-serif;
-    background-image: linear-gradient(180deg, #fff, #87f1ff);
+    background-image: linear-gradient(180deg, #fff, #23c6db);
     background-size: 100%;
     background-clip: text;
     -webkit-background-clip: text;

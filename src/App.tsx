@@ -166,14 +166,7 @@ const App = () => {
           null
         }
         {!gameOver ? 
-          <div>
-            <span className="score">Score: {score}</span>
-            {userAnswers.length !== amount ?
-              <button className="stop" onClick={stopTrivia}>
-                Stop
-              </button>
-            : null}
-          </div>
+            <span className="score">SCORE: {score}</span>
          : null}
         {loading && <p>Loading question...</p>}
         {!loading && !gameOver && (
@@ -194,6 +187,11 @@ const App = () => {
             Next Question
           </button>
         ) : null}
+        {!gameOver && userAnswers.length !== amount ?
+          <button className="stop" onClick={stopTrivia}>
+            Reset
+          </button>
+        : null}
       </Wrapper>
     </>
   );
