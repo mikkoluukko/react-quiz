@@ -121,11 +121,16 @@ const App = () => {
             Start
           </button>
         ) : 
-          <button className="stop" onClick={stopTrivia}>
-            Stop
-          </button>
+          null
         }
-        {!gameOver ? <p className="score">Score: {score}</p> : null}
+        {!gameOver ? 
+          <div>
+            <span className="score">Score: {score}</span>
+            <button className="stop" onClick={stopTrivia}>
+              Stop
+            </button>
+          </div>
+         : null}
         {loading && <p>Loading question...</p>}
         {!loading && !gameOver && (
           <QuestionCard 
