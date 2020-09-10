@@ -8,7 +8,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     background-image: url(${BGImage});
-    background-size: cover;
+    
     margin: 0;
     padding: 0 20px;
     display: flex;
@@ -39,6 +39,9 @@ export const Wrapper = styled.div`
     color: #fff;
     font-size: 2rem;
     margin: 10px;
+    padding: 5px;
+    background-color: #000;
+    border: 2px solid #fff;
   }
 
   h1 {
